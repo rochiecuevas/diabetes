@@ -21,18 +21,16 @@ CREATE TABLE diabetes(
     Adult_Diabetics_Percent float
 );
 
+CREATE TABLE merged(
+	`Year` text,
+    US_State text,
+    Adult_Diabetics_Percent float,
+    Obese_Children_Percent float
+    );
+
 -- View tables --
 SELECT * FROM diabetes;
 SELECT * FROM obesity;
-
--- Join tables --
-SELECT 
-	t1.`Year`,
-    t1.US_State,
-    t1.Adult_Diabetics_Percent,
-    t2.Obese_Children_Percent
-FROM diabetes as t1
-JOIN obesity as t2 on t1.US_State = t2.US_State;
 
 
 
