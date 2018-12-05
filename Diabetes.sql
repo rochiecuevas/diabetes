@@ -24,3 +24,8 @@ CREATE TABLE diabetes(
     US_State text,
     Adult_Diabetics_Percent float
 );
+
+-- View tables --
+SELECT * FROM diabetes;
+SELECT * FROM location;
+SELECT * FROM obesity;
