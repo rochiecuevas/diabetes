@@ -31,6 +31,7 @@ CREATE TABLE merged(
 -- View tables --
 SELECT * FROM diabetes;
 SELECT * FROM obesity;
+SELECT * FROM merged;
 
 
 
