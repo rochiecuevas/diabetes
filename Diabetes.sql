@@ -6,10 +6,6 @@ CREATE DATABASE diabetes_db;
 USE diabetes_db;
 
 -- Create tables within the database --
-CREATE TABLE location(
-	ID int primary key not null auto_increment,
-    US_State text
-);
 
 CREATE TABLE obesity(
 	ID int primary key not null auto_increment,
@@ -27,5 +23,18 @@ CREATE TABLE diabetes(
 
 -- View tables --
 SELECT * FROM diabetes;
-SELECT * FROM location;
 SELECT * FROM obesity;
+
+-- Join tables --
+SELECT 
+	t1.`Year`,
+    t1.US_State,
+    t1.Adult_Diabetics_Percent,
+    t2.Obese_Children_Percent
+FROM diabetes as t1
+JOIN obesity as t2 on t1.US_State = t2.US_State;
+
+
+
+
+
