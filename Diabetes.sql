@@ -29,3 +29,6 @@ CREATE TABLE diabetes(
 SELECT * FROM diabetes;
 SELECT * FROM location;
 SELECT * FROM obesity;
+
+
+
