@@ -26,13 +26,13 @@ def diabetes2012():
 def diabetes2014():
     return render_template("states_diabetes_2014.html")
 
-@app.route('/obesity&diabetes2012')
+@app.route('/diabetes2012&2014')
 def obdia2012():
-    return render_template("obesity_diabetes_2012.html")
+    return render_template("diabetics_2012_2014.html")
 
-@app.route('/obesity&diabetes2014')
+@app.route('/obesity2012&2014')
 def obdia2014():
-    return render_template("obesity_diabetes_2014.html")
+    return render_template("obesity_2012_2014.html")
 
 @app.route('/data')
 def index():
