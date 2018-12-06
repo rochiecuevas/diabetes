@@ -143,7 +143,7 @@ chronic_df7.to_sql(name = "diabetes", con = engine, if_exists = "replace", index
 nutr_df4.to_sql(name = "obesity", con = engine, if_exists = "replace", index = False)
 ```
 
-### Joining tables a second ETL 
+### Joining tables and a second ETL 
 A third table was created in __diabetes_db__, called 'merged'. This would contain the resulting data from joining the data from the 'obesity' and the 'diabetes' tables. SQLAlchemy was used to create a connection to the updated database and the presence of the three tables was confirmed using the code above.
 
 To extract the data from the 'obesity' and the 'diabetes' table, Pandas was used:
@@ -183,4 +183,140 @@ In MySQL Workbench:
 SELECT * FROM merged;
 ```
 
-## 
+## Extras: Creating a Flask app that renders static HTML files
+### Visualising diabetes and obesity trends per statefor 2012 and 2014
+In the third Jupyter notebook, the __merged__ dataframe was further cleaned to replace 'None' with NaN and to convert numerical values from string to float.
+
+```python
+# Convert None values to NAN
+merged.fillna(value = pd.np.nan, inplace = True)
+
+merged["Adult_Diabetics_Percent"] = merged["Adult_Diabetics_Percent"].astype(float)
+```
+
+The dataframe was then split into two based on the year:
+
+```python
+merged_2012 = merged[merged["Year"] == 2012]
+merged_2014 = merged[merged["Year"] == 2014]
+```
+
+To create a bar chart for diabetes for 2012, the following code was used:
+
+```python
+x_pos = np.arange(len(merged_2012["US_State"]))
+diabetics_2012 = list(merged_2012["Adult_Diabetics_Percent"])
+
+plt.figure(figsize = (16,8))
+plt.bar(x_pos, diabetics_2012)
+plt.xticks(x_pos, merged_2012["US_State"], rotation = 90, fontsize = 12)
+plt.yticks(fontsize = 12)
+plt.xlabel("U.S. State or Territory", fontsize = 16)
+plt.ylabel("Prevalence of Adult Diabetics (%)", fontsize = 16)
+plt.tight_layout()
+```
+
+This code was used to pattern other code to generate data for diabetes in 2014, and obesity for 2012 and for 2014.
+
+To create plots that compared data between years per disease, __merged__ was spliced to create new dataframe based on diseases:
+
+```python
+merged_diabetics = merged[["Year", "US_State", "Adult_Diabetics_Percent"]]
+merged_obesity = merged[["Year", "US_State", "Obese_Children_Percent"]]
+```
+
+To create a grouped bar chart, the dataframes had to be pivoted such that the datapoints were placed into two columns based on the year.
+
+```python
+merged_diabetics = merged_diabetics.pivot(index = "US_State", columns = "Year")
+merged_obesity = merged_obesity.pivot(index = "US_State", columns = "Year")
+```
+
+The grouped bar plot for diabetes prevalence, comparing 2012 and 2014, was generated with the following script:
+
+```python
+ax = merged_diabetics.plot(kind = "bar", figsize = (16,8))
+ax.set_xlabel("U.S. State or Territory", fontsize = 16)
+ax.set_ylabel("Prevalence of Adult Diabetes (%)", fontsize = 16)
+ax.legend(["2012","2014"], fontsize = 12)
+plt.tight_layout()
+```
+
+A similar bar plot for obesity prevalence was also generated, adopting the code above.
+
+All plots were saved into the Images folder. For example:
+
+```python
+plt.savefig("Images/diabetics_2012_2014.png")
+```
+
+### Flask app development
+The __diabetes_app.py__ needed [PyMySQL](https://pymysql.readthedocs.io/en/latest/) to connect to the __diabetes_db__ database and several Flask features:
+
+```python
+from flask import Flask, request, render_template, jsonify
+import pymysql
+from config import password
+```
+
+The connection to the database was created.
+
+```python
+db = pymysql.connect("localhost", "root", f"{password}", "diabetes_db")
+```
+
+Several static html pages were rendered by some of the routes. For example:
+
+```python
+@app.route('/')
+def intro():
+    return render_template("index.html")
+```
+
+These static pages have been pre-loaded with the plots saved in the Images folder. One html page, however, contains the data extracted from the connected database:
+
+```python
+@app.route('/data')
+def index():
+    cursor = db.cursor()
+    sql = "SELECT * FROM merged"
+    cursor.execute(sql)
+    columns = [col[0] for col in cursor.description] # gets the column headers in the merged table
+    results = [dict(zip(columns, row)) for row in cursor.fetchall()] # output is a list of dictionaries
+    return render_template("data.html", results = results)
+```
+
+Using __cursor.fetchall()__ would lead to a list of tuples containing values. 
+
+```python
+#Output example (tuple) in HTML
+(2012, "Alabama", "12.2", 15.6)
+```
+
+To be able to render the data onto a HTML table, the output needed to be a list of dictionaries. Hence, the column names were extracted from the 'merged' table as well (the first element in a list outputted by __[cursor.description](https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursor-description.html)__). For each row (effectively, each tuple in the list), the column names and the rows were zipped and converted to a dictionary. 
+
+```python
+# Output example (dictionary) in HTML
+{"Year": 2012, "US_State": "Alabama", "Adult_Diabetics_Percent": "12.2", "Obese_Children_Percent": 15.6}
+```
+
+The dictionary was rendered onto the table in __data.html__.
+
+```html
+...
+<table>
+    ...
+    <!-- Loop through rows in results -->
+    <!-- Each row contains year, state, diabetics, obese values -->
+    {% for row in results %}
+    <tr>
+        <td>{{ row.Year }}</td>
+        <td>{{ row.US_State }}</td>
+        <td>{{ row.Adult_Diabetics_Percent }}</td>
+        <td>{{ row.Obese_Children_Percent }}</td>
+    </tr>
+    {% endfor %}
+    ...
+</table>    
+...
+```
