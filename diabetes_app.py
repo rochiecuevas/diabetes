@@ -8,13 +8,31 @@ app = Flask(__name__)
 
 @app.route('/')
 def intro():
-    return (
-        f"Welcome to the diabetes app!<br/><br/>"
-        f"Let's explore trends for adult diabetes and childhood obesity in different USA states in 2012 and in 2014.<br/><br/>"
-        f"Available routes:<br/>"
-        f"/data"
-        )
+    return render_template("index.html")
 
+@app.route('/states&obesity2012')
+def obesity2012():
+    return render_template("states_obesity_2012.html")
+
+@app.route('/states&obesity2014')
+def obesity2014():
+    return render_template("states_obesity_2014.html")
+
+@app.route('/states&diabetes2012')
+def diabetes2012():
+    return render_template("states_diabetes_2012.html")
+
+@app.route('/states&diabetes2014')
+def diabetes2014():
+    return render_template("states_diabetes_2014.html")
+
+@app.route('/obesity&diabetes2012')
+def obdia2012():
+    return render_template("obesity_diabetes_2012.html")
+
+@app.route('/obesity&diabetes2014')
+def obdia2014():
+    return render_template("obesity_diabetes_2014.html")
 
 @app.route('/data')
 def index():

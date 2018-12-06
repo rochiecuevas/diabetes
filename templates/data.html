@@ -5,16 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <!-- Insert bootstrap link here -->
+    <!-- Insert bootstrap link and javascript scripts here -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Styles -->
+    <style>
+    body {padding-top: 70px;}
+    </style>
 
     <!-- Insert tab title here -->
-    <title>Diabetes and Obesity</title>
+    <title>Data</title>
 </head>
 <body>
     <!-- Navigation bar-->
-    
-    <!-- Put the contents of the page below (titles, text, and table -->
+    <nav class = "navbar navbar-default navbar-fixed-top">
+        <div class = "container-fluid">
+            <div class = "navbar-header">
+                <button type = "button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class = "icon-bar"></span>
+                    <span class = "icon-bar"></span>
+                    <span class = "icon-bar"></span>
+                </button>
+                <a class = "navbar-brand" href = "http://127.0.0.1:5000/"><span class = "glyphicon glyphicon-scale"></span>  Diabetes and Obesity</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class = "nav navbar-nav navbar-right">
+                    <li class = "dropdown">
+                        <a class = "dropdown-toggle" data-toggle = "dropdown" href = "#">Plots
+                        <span class = "caret"></span></a>
+                        <ul class = "dropdown-menu">
+                            <li><a href = "http://127.0.0.1:5000/states&obesity2012">Childhood Obesity in 2012</a></li>
+                            <li><a href = "http://127.0.0.1:5000/states&obesity2014">Childhood Obesity in 2014</a></li>
+                            <li><a href = "http://127.0.0.1:5000/states&diabetes2012">Adult Diabetes in 2012</a></li>
+                            <li><a href = "http://127.0.0.1:5000/states&diabetes2014">Adult Diabetes in 2014</a></li>
+                            <li><a href = "http://127.0.0.1:5000/obesity&diabetes2012">Diabetes & Obesity in 2012</a></li>
+                            <li><a href = "http://127.0.0.1:5000/obesity&diabetes2014">Diabetes & Obesity in 2014</a></li>
+                        </ul>
+                    </li>
+                    <li class = "active"><a href = "http://127.0.0.1:5000/data">Data</a></li>
+                </ul>
+            </div>
+        </div>    
+    </nav>
+
+    <!-- Put the contents of the page below (titles, text, and table) -->
     <div class = "container-fluid">
         <div class = "row">
             <div class = "col-md-8 col-md-offset-2">
