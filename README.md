@@ -1,6 +1,9 @@
 # ETL of 2012 and 2014 data on adult diabetes and childhood obesity from the Centres for Disease Control and Prevention
 
 ## Introduction
+[Diabetes](https://www.webmd.com/diabetes/default.htm) is a group of diseases which is marked by the body's inability to produce sufficient amounts, or to respond appropriately to insulin. It is not curable but it is highly treatable. Diabetes types 1 and 2 are the [most common types of diabetes](https://www.cdc.gov/mmwr/volumes/67/wr/mm6712a2.htm). [Type 1](https://www.joslin.org/the-problem-of-not-enough-beta-cells-in-type-1-dabetes.html) patients need insulin for survival because their immune systems are are destroying their pancreas beta cells (those that produce insulin). Type 2 patients exhibit ["insulin resistance"](http://www.diabetesforecast.org/2011/jun/understanding-insulin-resistance.html) or ["relative insulin deficiency"](http://clinchem.aaccjnls.org/content/45/8/1339). [Obesity](https://www.cdc.gov/obesity/childhood/defining.html) in children, on the other hand, is defined by the Centres for Disease Control and Prevention (CDC) as the 95th percentile or greater of the body mass index (BMI) distribution of children of the same age and sex.
+
+This project aimed to extract data from publicly available CDC information about adult diabetes and childhood obesity, transform the data, and load the data into a database. It also aimed to create a Flask app which would render the transformed data into HTML.
 
 ## Methodology
 Three Jupyter notebooks were used for extracting, transforming, and loading the diabetes and obesity data:
