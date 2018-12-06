@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Insert bootstrap link here -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Insert tab title here -->
+    <title>Diabetes and Obesity</title>
+</head>
+<body>
+    <div class = "container">
+        <!-- Title of the table -->
+        <h3>Diabetes in Adults (18+ years old) and Obesity in Children (2–4 years old) in Different States in the USA</h3>
+
+        <!-- Short introduction to the table -->
+        <p><a href = "https://www.webmd.com/diabetes/default.htm">Diabetes</a> is a group of diseases which is marked by the body's inability to produce sufficient amounts, or to respond appropriately to insulin. It is not curable but it is highly treatable.</p>
+        <p></p>
+    </div>
+
+    <!-- Table whose contents came from the diabetes_db (MySQL) -->
+    <!-- Data extracted from data.gov, transformed, and then loaded using Python -->
+    <div class = "container">
+        <table class = "table table-hover"> 
+            <!-- .table class: padding, horizontal dividers -->
+            <!-- .table-hover: shading for the row where the cursor is located -->
+
+            <!-- What follows contains the row of column headers -->
+            <thead>
+                <tr>
+                    <th>Year</th>
+                    <th>US State</th>
+                    <th>Prevalence of <br>Adult Diabetes (%)</th>
+                    <th>Prevalence of <br>Childhood Obesity (%)</th>
+                    </tr>
+            </thead>
+
+            <tbody>
+                <!-- Loop through rows in results -->
+                <!-- Each row containes year, state, diabetics, obese values -->
+                {% for row in results %}
+                <tr>
+                    <td>{{ row.Year }}</td>
+                    <td>{{ row.US_State }}</td>
+                    <td>{{ row.Adult_Diabetics_Percent }}</td>
+                    <td>{{ row.Obese_Children_Percent }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+       
+    </div>
+</body>
+</html>
